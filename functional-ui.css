@@ -1,0 +1,230 @@
+/* Bespoke Underwriting marketing theme overlay — presentation only.
+   Matches https://bespoke-underwriting-draft.netlify.app/ tokens.
+   Does not change layout geometry, inputs, calculations, or labels. */
+:root{
+  --bg:#101211;
+  --card:#171918;
+  --ink:#ffffff;
+  --muted:#dbdbdb;
+  --soft:rgba(255,255,255,.62);
+  --line:rgba(255,255,255,.12);
+  --accent:#359BC5;
+  --accent-hot:#4FB3DC;
+  --accent-ink:#101211;
+  --ghost:rgba(255,255,255,.08);
+  --sans:"Switzer",sans-serif;
+  --bu-card-shadow:0 10px 28px rgba(0,0,0,.28);
+  --header-blue:#359BC5;
+  --baltic-blue:#359BC5;
+  --rich-cerulean:#4FB3DC;
+  --alice-blue:#171918;
+  --baltic:var(--accent);
+  --cerulean:var(--accent-hot);
+  --alice:var(--card);
+  --orange:#359BC5;
+  --dgrey:#dbdbdb;
+  --lgrey:#9aa0a0;
+  --navy:#359BC5;
+  --bluegray:#4FB3DC;
+  --midnight:#101211;
+  --black:#ffffff;
+}
+html,body{
+  background:#101211!important;
+  color:#ffffff!important;
+  font-family:"Switzer",sans-serif!important;
+}
+html.bu-embed,html.bu-embed body{background:#101211!important;color:#ffffff!important}
+body,body *{font-family:"Switzer",sans-serif!important}
+svg text,svg tspan{font-family:"Switzer",sans-serif!important}
+
+#v-est, .wrap, #outRoot{
+  background:transparent!important;
+  color:#ffffff!important;
+}
+#v-est{background:transparent!important;min-height:100vh}
+
+.core-nav{font-family:"Switzer",sans-serif!important}
+.core-nav a{color:#dbdbdb!important;text-decoration:none}
+.core-nav a:hover{color:#ffffff!important}
+.core-nav a.on{color:#ffffff!important;border-bottom-color:#359BC5!important;font-weight:600}
+
+h1,h2,h3,h4,.rp-h,.out-head h1{
+  color:#ffffff!important;
+  font-family:"Switzer",sans-serif!important;
+}
+h2,.rp-h{color:#e8ecec!important}
+.meta,.note,.method,.fin-note,.fld-note,.pie-empty,.est,.geo-grid div span{color:#9aa0a0!important}
+a{color:#A9DCEF}
+
+.chart-card,.sec-cat,.metric-card,.loan-card{
+  background:#171918!important;
+  color:#ffffff!important;
+  border:1px solid rgba(53,155,197,.14)!important;
+  outline:0!important;
+  border-radius:12px!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.28)!important;
+}
+.chart-card{
+  background:linear-gradient(180deg,#1a1f20,#141716)!important;
+}
+.chart-card h3,.loan-card>h3,.loan-chart h4{
+  color:#e8ecec!important;
+  font-weight:500!important;
+}
+.metric-card .lbl,.top-metrics .metric-card .lbl{color:#9aa0a0!important}
+.metric-card .val,.top-metrics .metric-card .val{color:#4FB3DC!important}
+.dscr-val{color:#359BC5!important}
+.top-metrics .metric-card .sub,.top-metrics .metric-card .kv{color:#9aa0a0!important}
+.top-metrics .pass, .pass{color:#6CC0E0!important}
+.top-metrics .fail, .fail{color:#C62828!important}
+.top-metrics .metric-card .val .pass{color:#6CC0E0!important}
+.top-metrics .metric-card .val .fail{color:#C62828!important}
+#tmVerdict .val .miss{color:#9aa0a0!important}
+.miss,.fld-err,.metric-card .val.miss,.metric-card .miss{color:#e07070!important}
+.bridge .op{color:#A9DCEF!important}
+
+.out-table,.admin-model-table{
+  background:#171918!important;
+  color:#ffffff!important;
+  border-color:rgba(255,255,255,.12)!important;
+}
+.out-table th,.out-table td,
+.admin-model-table th,.admin-model-table td{
+  background:#171918!important;
+  color:#ffffff!important;
+  border-color:rgba(255,255,255,.12)!important;
+}
+.out-table thead th,
+.admin-model-table thead th,
+#loanLifecycleBottom .loan-group th{
+  background:#151818!important;
+  color:#9aa0a0!important;
+  font-weight:500!important;
+  letter-spacing:.02em;
+  border-bottom:1px solid rgba(255,255,255,.12)!important;
+}
+.out-table tfoot td,
+.out-table.total tfoot td{
+  background:rgba(53,155,197,.14)!important;
+  color:#d6eef7!important;
+  font-weight:600;
+}
+#postRefinanceSchedule .out-table,
+#postRefinanceSchedule .out-table tbody td{
+  background:#171918!important;
+  color:#ffffff!important;
+}
+#postRefinanceSchedule .out-table thead th{
+  background:#151818!important;
+  color:#9aa0a0!important;
+}
+#postRefinanceSchedule .out-table tfoot td{
+  background:rgba(53,155,197,.16)!important;
+  color:#d6eef7!important;
+}
+
+input,select,textarea{
+  background:#101211!important;
+  color:#ffffff!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  border-radius:8px!important;
+  caret-color:#ffffff;
+}
+input::placeholder,textarea::placeholder{color:rgba(255,255,255,.4)!important}
+#v-est .out-table input,
+#v-est textarea#inpAddr,
+#v-est .in-table td.num select,
+.top-metrics input{
+  background:#101211!important;
+  color:#ffffff!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+}
+#v-est .in-table td.num output.uw-derived{color:#e8ecec!important}
+#v-est .in-table td .uw-src,#v-est .pct-suffix,.top-metrics .pct-suffix{color:#9aa0a0!important}
+#v-est .addr-list{
+  background:#171918!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  color:#ffffff!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.35)!important;
+}
+#v-est .addr-list li{color:#ffffff!important}
+#v-est .addr-list li[aria-selected=true],#v-est .addr-list li:hover{background:rgba(53,155,197,.16)!important}
+#v-est .addr-list li.attr{color:#9aa0a0!important;background:#171918!important}
+#v-est input[aria-invalid=true],#v-est textarea#inpAddr[aria-invalid=true]{border-color:#e07070!important}
+
+.run-btn,.btn-export,.core-nav .btn-export,.out-head .btn-export{
+  background:#359BC5!important;
+  color:#101211!important;
+  border:0!important;
+  border-radius:8px!important;
+  box-shadow:none!important;
+  font-weight:500!important;
+}
+.run-btn:hover,.btn-export:hover,.core-nav .btn-export:hover,.out-head .btn-export:hover{
+  background:#4FB3DC!important;
+  color:#101211!important;
+  border-color:#4FB3DC!important;
+}
+.run-btn:focus-visible,.btn-export:focus-visible{
+  outline:2px solid #A9DCEF!important;
+  outline-offset:2px;
+}
+
+.pie-legend{color:#e8ecec!important}
+.admin-model-table .c-name{color:#ffffff!important}
+.admin-model-table .c-expl{color:#dbdbdb!important}
+.admin-model-table input[readonly]{background:#141716!important;color:#dbdbdb!important}
+
+*::-webkit-scrollbar{height:12px;width:12px}
+*::-webkit-scrollbar-track{background:#141716}
+*::-webkit-scrollbar-thumb{background:#359BC5;border-radius:8px;border:3px solid #141716}
+
+
+#v-est button{
+  background:rgba(255,255,255,.08)!important;
+  color:#ffffff!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  border-radius:8px!important;
+}
+#v-est .run-btn{
+  background:#359BC5!important;
+  color:#101211!important;
+  border:0!important;
+}
+
+/* Marketing chart system chrome (from the draft homepage) */
+.chart-slot{position:relative;background:linear-gradient(180deg,rgba(28,34,36,.96) 0%,#141716 72%);border-radius:12px;min-height:200px;overflow:hidden;border:1px solid rgba(53,155,197,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 0 32px rgba(53,155,197,.08)}
+.chart-card .chart-slot{border:0;box-shadow:none;background:transparent;min-height:240px;height:100%}
+.chart-slot svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.chart-slot .chart-title{fill:#e8ecec!important;font-family:Switzer,sans-serif!important;font-size:13px!important;font-weight:500!important;letter-spacing:-.01em}
+.chart-slot .axis-label{fill:#9aa0a0!important;font-family:ui-monospace,"SFMono-Regular",Menlo,monospace!important;font-size:11px!important;letter-spacing:.12em;text-transform:uppercase}
+.chart-slot .tick{fill:#9aa0a0!important;font-family:ui-monospace,Menlo,monospace!important;font-size:12px!important;letter-spacing:0;text-transform:none}
+.chart-slot .row-label{fill:#d5d8d8!important;font-family:Switzer,sans-serif!important;font-size:13px!important;font-weight:400!important}
+.chart-slot .row-val{fill:#9bb4bc!important;font-family:ui-monospace,Menlo,monospace!important;font-size:12px!important}
+.chart-slot .ink{fill:#101211!important}
+.chart-slot .paper{fill:#ffffff!important}
+.chart-slot .donut-center{fill:#fff!important;font-family:Switzer,sans-serif!important;font-weight:500}
+.chart-slot text{pointer-events:none}
+.chart-slot .hit{cursor:pointer}
+.chart-slot.is-hot .hit{opacity:.32}
+.chart-slot.is-hot .hit.is-on{opacity:1;filter:drop-shadow(0 0 10px rgba(79,179,220,.55))}
+.chart-slot .bar-grow,.chart-slot .bar-grow-x,.chart-slot .donut-grow{opacity:0}
+.chart-slot.in-view .bar-grow{animation:barUp .75s cubic-bezier(.2,.75,.2,1) forwards}
+.chart-slot.in-view .bar-grow-x{animation:barRight .75s cubic-bezier(.2,.75,.2,1) forwards}
+.chart-slot.in-view .donut-grow{animation:fadeIn .7s ease forwards}
+@keyframes barUp{from{transform:scaleY(0);opacity:.2}to{transform:scaleY(1);opacity:1}}
+@keyframes barRight{from{transform:scaleX(0);opacity:.2}to{transform:scaleX(1);opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.bar-grow{transform-box:fill-box;transform-origin:center bottom}
+.bar-grow-x{transform-box:fill-box;transform-origin:left center}
+@media (prefers-reduced-motion:reduce){
+  .chart-slot .bar-grow,.chart-slot .bar-grow-x,.chart-slot .donut-grow{opacity:1;animation:none}
+}
+#chart-tip{position:fixed;z-index:80;min-width:140px;max-width:260px;padding:10px 12px;border-radius:10px;background:#222322;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 1px rgba(53,155,197,.25);pointer-events:none;font:500 13px/1.35 Switzer,sans-serif}
+#chart-tip b{display:block;font-weight:500;margin-bottom:4px;font-size:13px!important}
+#chart-tip span{display:block;color:#A9DCEF;font-family:ui-monospace,Menlo,monospace;font-size:12px!important}
+#loanLifecycleBottom .loan-chart h4{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.out-table .num,.admin-model-table .c-val{text-align:right;font-variant-numeric:tabular-nums}
+.out-table td{color:#e8ecec!important}
+.out-table td:first-child{color:#ffffff!important}

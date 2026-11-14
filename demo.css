@@ -1,0 +1,610 @@
+/* Bespoke Underwriting single-page demo — layout/skin only (Nov 11 2026). Colors: #101211 bg, #171918 cards, #359BC5 ramp. */
+:root{--bu-bg:#101211;--bu-card:#171918;--bu-card2:#1c1f1e;--bu-blue:#359BC5;--bu-blue2:#6CC0E0;--bu-blue3:#A9DCEF;--bu-blue4:#D6EEF7;--bu-line:rgba(255,255,255,.08);--bu-soft:rgba(255,255,255,.62);--bu-g:80px;--bu-hh:72px}
+@media(max-width:991px){:root{--bu-g:64px}}
+@media(max-width:767px){:root{--bu-g:56px}}
+@media(max-width:479px){:root{--bu-g:40px}}
+html,body.bu-demo{background:var(--bu-bg)!important;overflow-x:clip!important}
+body.bu-demo{margin:0;font:300 16px/1.5 "Switzer",sans-serif!important;color:#fff;letter-spacing:-.01em}
+.bu-w{width:min(1440px,calc(100% - var(--bu-g)*2));margin-left:auto;margin-right:auto;box-sizing:border-box}
+body.bu-demo #v-est{max-width:none!important;width:auto!important;margin:0!important;padding:0 0 120px!important;min-height:0!important;background:transparent!important;font:300 16px/1.5 "Switzer",sans-serif!important}
+body.bu-demo .bu-outstage{padding:0!important;margin:0 auto!important;min-height:0!important}
+body.bu-demo .bu-outstage #outRoot:empty{display:none}
+.accent{background:linear-gradient(90deg,#359BC5 0%,#A9DCEF 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#359BC5}
+
+/* ---------- site header (mirrors homepage .topbar) ---------- */
+.bu-sitebar{position:sticky;top:0;z-index:60;height:var(--bu-hh);background:var(--bu-bg)}
+.bu-sitebar-inner{height:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}
+.bu-sb-brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:#fff;font-weight:500;font-size:18px!important;letter-spacing:-.02em;flex:0 0 auto;grid-column:1;justify-self:start}
+.bu-sb-brand img{width:44px;height:44px}
+.bu-sb-nav{display:flex;align-items:center;gap:4px;grid-column:2;justify-self:center;margin:0}
+.bu-sb-nav a{display:inline-flex;align-items:center;height:40px;text-decoration:none;color:#dbdbdb;font-size:15px!important;font-weight:500;padding:0 12px;letter-spacing:-.01em}
+.bu-sb-nav a:hover,.bu-sb-nav a[aria-current]{color:#fff}
+.bu-sb-actions{display:flex;align-items:center;gap:12px;grid-column:3;justify-self:end;margin:0}
+.bu-sb-cta,.bu-btn{display:inline-flex;align-items:center;justify-content:center;background:var(--bu-blue);color:#101211;text-decoration:none;border:0;cursor:pointer;font:500 14px/1.2 "Switzer",sans-serif!important;padding:9px 16px;border-radius:8px}
+.bu-sb-cta:hover,.bu-btn:hover{background:#4FB3DC}
+.bu-btn{font-size:16px!important;padding:16px 28px}
+.bu-btn[disabled]{opacity:.5;cursor:not-allowed}
+.bu-sb-menu{display:none;grid-column:3;justify-self:end;margin-left:auto;background:none;border:0;padding:8px;cursor:pointer;line-height:0}
+.bu-sb-menu span{display:block;width:20px;height:1.5px;background:#fff;margin:5px 0}
+@media(max-width:820px){
+  .bu-sitebar-inner{display:flex;justify-content:space-between}
+  .bu-sb-brand,.bu-sb-nav,.bu-sb-actions,.bu-sb-menu{grid-column:auto;justify-self:auto}
+  .bu-sb-menu{display:inline-block}.bu-sb-nav,.bu-sb-actions{display:none}
+  .bu-sitebar.open{height:auto}.bu-sitebar.open .bu-sitebar-inner{flex-wrap:wrap;padding:16px 0}
+  .bu-sitebar.open .bu-sb-nav,.bu-sitebar.open .bu-sb-actions{display:flex;flex-direction:column;align-items:stretch;flex:0 0 100%;margin:0;padding-top:8px}
+  .bu-sitebar.open .bu-sb-nav a{height:auto;padding:12px 0}.bu-sitebar.open .bu-sb-cta{width:100%;padding:14px 16px}
+}
+@media(max-width:479px){.bu-sb-brand img{width:38px;height:38px}}
+
+/* ---------- shared ---------- */
+.bu-card{background:var(--bu-card);border-radius:16px;box-shadow:0 12px 32px rgba(0,0,0,.30);padding:22px;box-sizing:border-box;min-width:0}
+.bu-kicker{display:inline-block;font:500 14px/1.3 "Switzer",sans-serif!important;color:var(--bu-blue);margin:0 0 12px}
+.bu-sec-head{margin:0 0 32px;max-width:46em}
+.bu-sec-head h2{font:500 clamp(30px,2vw + 18px,44px)/1.12 "Switzer",sans-serif!important;letter-spacing:-.025em;margin:0;color:#fff}
+.bu-sec-head-sm{margin-bottom:16px}.bu-sec-head-sm h3{font:500 22px/1.25 "Switzer",sans-serif!important;margin:0;color:#fff}
+.bu-sec-lede{margin-top:14px;color:var(--bu-soft);font-size:18px!important;line-height:1.5}
+.bu-muted{color:#9aa0a0}
+.bu-link{background:none;border:0;padding:0;color:var(--bu-blue3);font:500 14px/1.4 "Switzer",sans-serif!important;cursor:pointer;text-decoration:none}
+.bu-link:hover{color:#fff}
+.bu-src{display:block;font-size:12.5px!important;line-height:1.45;color:#8d9393;margin-top:10px}
+.bu-ico{display:inline-flex;width:40px;height:40px;border-radius:10px;align-items:center;justify-content:center;background:rgba(53,155,197,.14);color:var(--bu-blue3)}
+.bu-ico svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- hero ---------- */
+.bu-hero{padding:80px 0 56px}
+.bu-hero-copy{text-align:center;max-width:46em;margin:0 auto 48px}
+.bu-hero-copy h1{font:500 clamp(34px,calc(2vw + 28px),52px)/1.12 "Switzer",sans-serif!important;letter-spacing:-.025em;margin:0 0 24px;padding-bottom:8px;color:#fff}
+.bu-hero-lede{font-size:20px!important;line-height:1.45;font-weight:300;color:#fff;max-width:34em;margin:0 auto}
+.bu-hero-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:stretch}
+.bu-addr-card{display:flex;flex-direction:column;gap:14px;padding:16px}
+.bu-map{position:relative;height:300px;border-radius:12px;overflow:hidden;background:#131514;border:1px solid var(--bu-line)}
+.bu-map .bu-map-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px;color:#9aa0a0;font-size:15px!important;background:radial-gradient(circle at 50% 40%,rgba(53,155,197,.10),transparent 60%)}
+.bu-map.on .bu-map-ph{display:none}
+.bu-map .leaflet-container,.bu-map.leaflet-container{background:#1b1e1d;font-family:"Switzer",sans-serif}
+.bu-map .leaflet-tile-pane{filter:brightness(.72) saturate(.55) contrast(1.05)}
+.bu-map .leaflet-control-attribution{background:rgba(16,18,17,.75);color:#aab}
+.bu-map .leaflet-control-attribution a{color:var(--bu-blue3)}
+.bu-route{min-height:22px;font-size:15px!important;color:#e8ecec;padding:0 6px;display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center}
+.bu-route b{font-weight:600;color:#fff}
+.bu-route-dot{width:10px;height:10px;border-radius:50%;background:var(--bu-blue);box-shadow:0 0 0 3px rgba(53,155,197,.25)}
+body.bu-demo #v-est .bu-addr-card .addr-step{margin:0!important;padding:0 6px 6px!important;background:transparent!important;box-shadow:none!important;border-radius:0}
+body.bu-demo #v-est .bu-addr-card .addr-step-title{font:500 15px/1.3 "Switzer",sans-serif!important;color:#dbdbdb;margin:0 0 8px}
+body.bu-demo #v-est .bu-addr-card .addr-step-hint{display:none}
+body.bu-demo #v-est .bu-addr-card textarea#inpAddr{min-height:76px!important;font:400 18px/1.35 "Switzer",sans-serif!important;padding:14px 16px;border-radius:12px;border:1px solid rgba(53,155,197,.45);background:#101211;color:#fff}
+body.bu-demo #v-est .bu-addr-card textarea#inpAddr:focus{outline:none;border-color:var(--bu-blue);box-shadow:0 0 0 3px rgba(53,155,197,.25)}
+.bu-lever{display:flex;flex-direction:column;gap:12px}
+.bu-lever label{font:500 15px/1.3 "Switzer",sans-serif!important;color:#dbdbdb;margin-top:6px}
+.bu-lever input[type=number]{width:100%;box-sizing:border-box;font:500 34px/1.1 "Switzer",sans-serif!important;letter-spacing:-.02em;color:#fff;background:#101211;border:1px solid var(--bu-line);border-radius:12px;padding:14px 16px}
+.bu-lever input[type=number]:focus{outline:none;border-color:var(--bu-blue);box-shadow:0 0 0 3px rgba(53,155,197,.25)}
+.bu-lever-foot{margin-top:auto;font-size:13px!important;color:#8d9393}
+input[type=range].bu-range,.bu-lever input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;margin:6px 0 0;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(90deg,#359BC5,#A9DCEF);opacity:.85}
+input[type=range]::-moz-range-track{height:6px;border-radius:6px;background:linear-gradient(90deg,#359BC5,#A9DCEF)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid #359BC5;margin-top:-7px;box-shadow:0 2px 8px rgba(0,0,0,.4);transition:transform .15s}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid #359BC5}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
+input[type=range]:focus-visible{outline:2px solid #359BC5;outline-offset:2px}
+
+/* ---------- verdict ---------- */
+.bu-verdict{padding:24px 0 72px}
+.bu-vgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:stretch}
+.bu-vcard{background:var(--bu-card);border-radius:16px;box-shadow:0 12px 32px rgba(0,0,0,.30);padding:22px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.bu-vmain{grid-row:span 2;background:linear-gradient(160deg,rgba(53,155,197,.16),rgba(23,25,24,1) 55%)}
+.bu-vlab{font:500 13px/1.3 "Switzer",sans-serif!important;letter-spacing:.04em;text-transform:uppercase;color:#9aa0a0}
+.bu-vbig{font:500 56px/1 "Switzer",sans-serif!important;letter-spacing:-.03em;color:#fff;margin:4px 0}
+.bu-vbig.sm{font-size:36px!important}
+.pass .bu-vbig{background:linear-gradient(90deg,#6CC0E0,#D6EEF7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.fail .bu-vbig{color:#e8ecec}
+.bu-vsub{color:var(--bu-soft);font-size:15px!important;line-height:1.45}
+.bu-vsub b{color:#fff;font-weight:600}
+.bu-vkv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid var(--bu-line);font-size:14.5px!important;color:#cfd4d4}
+.bu-vkv b{color:#fff;font-weight:600;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.bu-vmain .bu-vkv:first-of-type{margin-top:auto}
+.bu-cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:6px 0 4px}
+.bu-cmp>div{background:#131514;border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.bu-cmp-v{font:500 28px/1.1 "Switzer",sans-serif!important;color:#fff;letter-spacing:-.02em}
+.accent-t{color:var(--bu-blue3)}
+.bu-cmp-l{font-size:12.5px!important;color:#9aa0a0;line-height:1.35}
+.bu-mini{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13.5px!important;color:#9aa0a0;margin-top:4px}
+.bu-mini input,.bu-logi input,.bu-logi select{width:120px;box-sizing:border-box;background:#101211;border:1px solid var(--bu-line);border-radius:8px;color:#fff;font:500 14px/1.2 "Switzer",sans-serif!important;padding:8px 10px;text-align:right}
+.bu-logi{margin-top:6px;border-top:1px solid var(--bu-line);padding-top:8px}
+.bu-logi summary{cursor:pointer;color:var(--bu-blue3);font:500 14px/1.4 "Switzer",sans-serif!important;list-style:none}
+.bu-logi summary::-webkit-details-marker{display:none}
+.bu-logi summary::before{content:"+ "}.bu-logi[open] summary::before{content:"– "}
+.bu-logi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.bu-logi-grid label{display:flex;flex-direction:column;gap:4px;font-size:12.5px!important;color:#9aa0a0}
+.bu-logi-grid input,.bu-logi-grid select{width:100%;text-align:left}
+.bu-vcard .bu-link{margin-top:auto;padding-top:6px}
+
+/* ---------- results ---------- */
+.bu-results{padding:24px 0 72px}
+.bu-results-body .top-metrics{margin:0 0 20px!important}
+.bu-results-body .cost-pair{margin:0!important}
+.bu-results-body .metric-card{min-height:96px}
+
+/* ---------- progress ---------- */
+.bu-progress{position:sticky;top:var(--bu-hh);z-index:50;display:flex;gap:6px;justify-content:center;padding:10px 12px;margin:0 auto 8px;width:min(1440px,calc(100% - var(--bu-g)*2));box-sizing:border-box;background:rgba(16,18,17,.92);backdrop-filter:blur(8px);border-radius:999px;border:1px solid var(--bu-line)}
+.bu-prog-item{display:flex;align-items:center;gap:8px;text-decoration:none;color:#9aa0a0;font:500 13px/1.2 "Switzer",sans-serif!important;padding:4px 10px 4px 4px;border-radius:999px;transition:background .2s,color .2s;white-space:nowrap}
+.bu-prog-item:hover{color:#fff}
+.bu-prog-dot{width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#202423;color:#cfd4d4;font-size:12px!important;transition:background .25s,color .25s}
+.bu-prog-item.cur{background:rgba(53,155,197,.12);color:#fff}
+.bu-prog-item.done .bu-prog-dot{background:var(--bu-blue);color:#101211}
+.bu-prog-item.done .bu-prog-dot{font-size:0!important}.bu-prog-item.done .bu-prog-dot::after{content:"✓";font-size:13px!important}
+@media(max-width:1100px){.bu-prog-t{display:none}.bu-prog-item{padding:4px}}
+@media(max-width:767px){.bu-progress{position:static;border-radius:14px}}
+
+/* ---------- steps (inputs | outputs) ---------- */
+.bu-steps{padding:56px 0 24px}
+.bu-step{margin:0 0 72px;scroll-margin-top:140px}
+.bu-step-head{display:flex;align-items:baseline;gap:14px;margin:0 0 18px}
+.bu-step-n{font:500 13px/1 "Switzer",sans-serif!important;color:#101211;background:var(--bu-blue);border-radius:999px;padding:6px 12px;letter-spacing:.02em}
+.bu-step-head h3{font:500 26px/1.2 "Switzer",sans-serif!important;letter-spacing:-.02em;margin:0;color:#fff}
+.bu-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:stretch}
+.bu-pair-in,.bu-pair-out{display:flex;flex-direction:column;gap:20px;min-width:0}
+.bu-pair-in>section.sec{flex:1 1 auto;margin:0!important}
+.bu-pair-out .bu-slot{min-width:0}
+.bu-pair-out .bu-slot:last-child{flex:1 1 auto;display:flex;flex-direction:column}
+.bu-pair-out .bu-slot:last-child>*{flex:1 1 auto}
+.bu-pair-out .bu-slot:empty{display:none}
+.bu-pair-out .sec,.bu-pair-out .chart-card,.bu-pair-out #loanLifecycleBottom{margin:0!important}
+.bu-slot>section.sec,.bu-slot>.chart-card{height:100%;box-sizing:border-box}
+@media(max-width:900px){.bu-pair{grid-template-columns:1fr}.bu-hero-grid{grid-template-columns:1fr 1fr}.bu-addr-card{grid-column:1 / -1}.bu-vgrid{grid-template-columns:1fr 1fr}.bu-vmain{grid-row:auto;grid-column:1 / -1}}
+@media(max-width:600px){.bu-hero-grid,.bu-vgrid{grid-template-columns:1fr}.bu-hero{padding:48px 0 40px}.bu-map{height:240px}.bu-vbig{font-size:46px!important}.bu-cmp{grid-template-columns:1fr}.bu-step-head h3{font-size:22px!important}}
+
+/* input cards: retail-style fields (rows, labels, values and order unchanged) */
+html body.bu-demo #v-est .bu-pair-in section.sec-cat{background:var(--bu-card)!important;border-radius:16px!important;box-shadow:0 12px 32px rgba(0,0,0,.30)!important;padding:8px 22px 18px!important}
+html body.bu-demo #v-est .bu-pair-in table.out-table{border:0!important;background:transparent!important;border-radius:0!important;table-layout:auto!important;display:block!important;width:100%!important}
+html body.bu-demo #v-est .bu-pair-in table.out-table thead{display:block!important}
+html body.bu-demo #v-est .bu-pair-in table.out-table thead tr{display:flex!important;justify-content:space-between;align-items:center;gap:12px;padding:14px 0 12px;border-bottom:1px solid var(--bu-line)}
+html body.bu-demo #v-est .bu-pair-in table.out-table thead th{background:transparent!important;color:#fff!important;border:0!important;padding:0!important;font:500 18px/1.3 "Switzer",sans-serif!important;width:auto!important}
+html body.bu-demo #v-est .bu-pair-in table.out-table thead th.num{color:#9aa0a0!important;font-size:13px!important;font-weight:500!important;text-transform:uppercase;letter-spacing:.04em}
+html body.bu-demo #v-est .bu-pair-in table.out-table tbody{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 22px;padding-top:6px}
+html body.bu-demo #v-est .bu-pair-in table.out-table tbody tr:not([hidden]):not([style*="none"]){display:flex!important;flex-direction:column;gap:8px;padding:12px 0!important;border:0!important;border-bottom:1px solid var(--bu-line)!important}
+html body.bu-demo #v-est .bu-pair-in table.out-table tbody tr[hidden],html body.bu-demo #v-est .bu-pair-in table.out-table tbody tr[style*="none"]{display:none!important}
+html body.bu-demo #v-est .bu-pair-in table.out-table td{display:block!important;width:auto!important;border:0!important;padding:0!important;text-align:left!important;font:400 14px/1.35 "Switzer",sans-serif!important;color:#cfd4d4}
+html body.bu-demo #v-est .bu-pair-in table.out-table td::before{content:none!important;display:none!important}
+html body.bu-demo #v-est .bu-pair-in table.out-table td label{font:400 14px/1.35 "Switzer",sans-serif!important;color:#cfd4d4}
+html body.bu-demo #v-est .bu-pair-in td.num input:not([type=range]),html body.bu-demo #v-est .bu-pair-in td.num select{display:block;width:100%!important;max-width:none!important;margin:0!important;box-sizing:border-box;height:46px;font:500 18px/1.2 "Switzer",sans-serif!important;color:#fff;text-align:left!important;background:#101211!important;border:1px solid var(--bu-line)!important;border-radius:10px!important;padding:10px 14px!important;transition:border-color .15s,box-shadow .15s}
+html body.bu-demo #v-est .bu-pair-in td.num input:focus,html body.bu-demo #v-est .bu-pair-in td.num select:focus{outline:none;border-color:var(--bu-blue)!important;box-shadow:0 0 0 3px rgba(53,155,197,.22)}
+html body.bu-demo #v-est .bu-pair-in .pct-wrap{max-width:none!important;width:100%;display:block}
+html body.bu-demo #v-est .bu-pair-in .pct-suffix{right:14px;color:#9aa0a0}
+html body.bu-demo #v-est .bu-pair-in output.uw-derived{display:block;text-align:left!important;font:500 18px/1.3 "Switzer",sans-serif!important;color:#fff;padding:10px 0!important}
+html body.bu-demo #v-est .bu-pair-in .fld-err{text-align:left;font-size:13px!important;color:#ff9c95}
+html body.bu-demo #v-est .bu-pair-in .bu-range{margin-top:2px}
+html body.bu-demo #v-est .bu-pair-in #btnSiteReset{background:transparent;color:var(--bu-blue3);border:1px solid rgba(53,155,197,.4);border-radius:8px;padding:10px 14px;font:500 14px/1.2 "Switzer",sans-serif!important;cursor:pointer}
+.bu-est{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;font:500 11px/1.4 "Switzer",sans-serif!important;letter-spacing:.03em;color:var(--bu-blue3);background:rgba(53,155,197,.14);vertical-align:1px}
+.bu-land-note{display:block;font:400 12.5px/1.4 "Switzer",sans-serif!important;color:#9aa0a0;margin-top:2px}
+#buFactoryReset{display:inline-block;margin-top:2px;font-size:12.5px!important}
+@media(max-width:600px){html body.bu-demo #v-est .bu-pair-in table.out-table tbody{grid-template-columns:1fr}html body.bu-demo #v-est .bu-pair-in section.sec-cat{padding:6px 16px 14px!important}}
+/* accordion */
+html body.bu-demo #v-est .bu-acc thead{cursor:pointer}
+.bu-acc-btn{display:inline-flex;align-items:center;gap:10px;background:none;border:0;color:#fff;font:500 18px/1.3 "Switzer",sans-serif!important;padding:0;cursor:pointer;text-align:left}
+.bu-acc-chev{width:9px;height:9px;border-right:2px solid var(--bu-blue3);border-bottom:2px solid var(--bu-blue3);transform:rotate(45deg) translateY(-3px);transition:transform .2s}
+.bu-collapsed .bu-acc-chev{transform:rotate(-45deg)}
+.bu-acc-total{font:600 16px/1.2 "Switzer",sans-serif!important;color:#fff;text-transform:none;letter-spacing:0}
+html body.bu-demo #v-est .bu-pair-in .bu-collapsed table.out-table tbody{display:none!important}
+html body.bu-demo #v-est .bu-pair-in .bu-collapsed table.out-table thead tr{border-bottom:0}
+.bu-acc-btn:focus-visible{outline:2px solid #359BC5;outline-offset:4px;border-radius:4px}
+
+/* output cards in the right column */
+html body.bu-demo #v-est .bu-pair-out .sec-cat,html body.bu-demo #v-est .bu-pair-out .chart-card,html body.bu-demo #v-est .bu-pair-out .noi-sec,html body.bu-demo #v-est .bu-pair-out #loanLifecycleBottom{background:var(--bu-card)!important;border-radius:16px!important;box-shadow:0 12px 32px rgba(0,0,0,.30)!important;border:0!important;padding:18px!important;box-sizing:border-box}
+html body.bu-demo #v-est .bu-pair-out .gantt-sec,html body.bu-demo #v-est .bu-pair-out .rent-proj{padding:0!important;background:transparent!important;box-shadow:none!important}
+html body.bu-demo #v-est #loanLifecycleBottom h2{font:500 18px/1.3 "Switzer",sans-serif!important;margin:0 0 10px;color:#fff}
+html body.bu-demo #v-est #loanLifecycleBottom .loan-card{margin:0!important}
+.bu-wf svg{display:block;width:100%;height:auto}
+.bu-wf-title{fill:#fff;font:600 14px "Switzer",sans-serif!important}
+.bu-wf-tick{fill:#8d9393;font:11px "Switzer",sans-serif!important}
+.bu-wf-val{fill:#e8ecec;font:600 11px "Switzer",sans-serif!important}
+.bu-wf-lab{fill:#aab0b0;font:11px "Switzer",sans-serif!important}
+.bu-wf-bar{animation:buGrow .5s cubic-bezier(.2,.8,.2,1) both;transform-origin:50% 100%;transform-box:fill-box}
+@keyframes buGrow{from{opacity:0;transform:scaleY(.4)}to{opacity:1;transform:none}}
+.bu-wf.chart-card{background:var(--bu-card)!important;border-radius:16px!important;box-shadow:0 12px 32px rgba(0,0,0,.30)!important;padding:14px!important;height:100%;box-sizing:border-box}
+/* pulse on change */
+.bu-pulse>*{animation:buPulse 1s ease-out}
+@keyframes buPulse{0%{box-shadow:0 0 0 0 rgba(53,155,197,.55),0 12px 32px rgba(0,0,0,.3)}100%{box-shadow:0 0 0 14px rgba(53,155,197,0),0 12px 32px rgba(0,0,0,.3)}}
+/* hold detail */
+.bu-hold{padding:8px 0 64px}
+.bu-hold-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:stretch}
+.bu-hold-body>section{margin:0!important}
+html body.bu-demo #v-est .bu-hold-body .sec-cat{background:var(--bu-card)!important;border-radius:16px!important;box-shadow:0 12px 32px rgba(0,0,0,.30)!important;padding:18px!important}
+@media(max-width:900px){.bu-hold-body{grid-template-columns:1fr}}
+/* ready */
+.bu-ready{padding:24px 0 40px}
+.bu-ready-card{background:linear-gradient(160deg,rgba(53,155,197,.18),#171918 60%);border-radius:20px;box-shadow:0 16px 40px rgba(0,0,0,.35);padding:48px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+.bu-ready-card h2{font:500 clamp(30px,2vw + 18px,44px)/1.12 "Switzer",sans-serif!important;letter-spacing:-.025em;margin:0}
+.bu-ready-row{display:flex;flex-direction:column;align-items:center;gap:4px;margin:8px 0 12px}
+@media(max-width:600px){.bu-ready-card{padding:32px 20px}}
+/* recalc */
+.bu-recalc{position:fixed;right:24px;bottom:24px;z-index:70;background:#171918;color:#fff;border:1px solid rgba(53,155,197,.5);border-radius:999px;padding:12px 20px;font:500 14px/1 "Switzer",sans-serif!important;cursor:pointer;box-shadow:0 10px 28px rgba(0,0,0,.45)}
+.bu-recalc:hover{background:#1f2322}
+.bu-recalc.spin{border-color:#A9DCEF}
+@media(max-width:600px){.bu-recalc{right:16px;bottom:16px;padding:10px 16px}}
+
+/* specificity guards against the page-wide body *{font-size} and :is(#v-est) svg[viewbox] rules */
+html body.bu-demo #v-est .bu-ico svg{display:block!important;width:22px!important;height:22px!important;min-width:0!important}
+html body.bu-demo #v-est .bu-ico{display:inline-flex!important;width:40px!important;height:40px!important;flex:0 0 auto}
+html body.bu-demo #v-est .run-row{display:none!important}
+html body.bu-demo #v-est .bu-wf svg[viewBox]{height:auto!important}
+html body.bu-demo .bu-sitebar svg,html body.bu-demo .bu-sitebar img{width:44px!important;height:44px!important}
+@media(max-width:1360px){.bu-prog-t{display:none}.bu-prog-item{padding:4px}.bu-progress{width:max-content;max-width:calc(100% - var(--bu-g)*2)}}
+@media(max-width:1360px){.bu-prog-item.cur .bu-prog-t{display:inline;padding-right:6px}}
+html body.bu-demo #v-est :is(.bu-hero,.bu-verdict,.bu-ready,.bu-steps,.bu-results,.bu-hold,.bu-progress) :is(span,b,strong,em,small,i):not([class]),html body.bu-demo #v-est .accent{font-size:inherit!important}
+html body.bu-demo .bu-w{width:min(1440px,calc(100% - var(--bu-g)*2))!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important}
+html body.bu-demo #v-est .bu-pair-in td .unit{display:block;font-size:12px!important;color:#9aa0a0;margin-top:2px}
+.bu-hold-body{grid-template-columns:1fr!important}
+html body.bu-demo #v-est .bu-pair.bu-pair-collapsed{align-items:start}
+html body.bu-demo #v-est .bu-map,html body.bu-demo #v-est .bu-map.bu-fit-container{overflow:hidden!important;width:auto!important}
+html body.bu-demo #v-est .bu-map .leaflet-control-container .bu-fit-container,html body.bu-demo #v-est .bu-map .leaflet-pane.bu-fit-container{width:auto!important;overflow:visible!important}
+html body.bu-demo #v-est .bu-map svg.leaflet-attribution-flag{display:none!important}
+html body.bu-demo #v-est .bu-hero-copy{max-width:1000px!important}
+html body.bu-demo #v-est .bu-hero-lede{max-width:640px!important}
+html body.bu-demo #addrStatus{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important;margin:-1px!important;padding:0!important;border:0!important}
+.bu-acc-total{white-space:nowrap}
+html body.bu-demo #v-est .bu-pair-in .bu-acc table.out-table thead th:first-child{min-width:0;flex:1 1 auto}
+html body.bu-demo #v-est .bu-pair-in .bu-acc table.out-table thead th.num{flex:0 0 auto}
+.bu-acc-btn{background:transparent!important;border:0!important;box-shadow:none!important}
+/* ---- polish pass 9:44 ---- */
+/* verdict: no 2-row Pass card; metrics sit directly under Pass; financing spans two columns so row 2 balances */
+.bu-vmain{grid-row:auto!important}
+.bu-vmain .bu-vkv:first-of-type{margin-top:10px!important}
+.bu-vfin{grid-column:span 2;display:grid!important;grid-template-columns:1fr 1fr;column-gap:32px;align-content:start}
+.bu-vfin>.bu-vlab,.bu-vfin>.bu-link{grid-column:1 / -1}
+.bu-vfin>.bu-link{margin-top:8px}
+@media(max-width:900px){.bu-vmain{grid-column:1 / -1}.bu-vfin{grid-column:1 / -1}}
+@media(max-width:600px){.bu-vfin{grid-template-columns:1fr}}
+/* recalc: in the step bar on >=768px */
+.bu-progress{align-items:center}
+.bu-progress .bu-recalc{position:static!important;margin-left:8px;padding:7px 14px!important;box-shadow:none;font-size:13px!important;flex:0 0 auto}
+/* phones: inline under the hero cards, never fixed */
+@media(max-width:767px){.bu-hero .bu-recalc{position:static!important;display:block;width:100%;margin:16px 0 0;border-radius:12px;padding:14px 16px!important;box-shadow:none}}
+/* map: compact one-line attribution, taller on phones */
+html body.bu-demo #v-est .bu-map .leaflet-control-attribution,html body.bu-demo #v-est .bu-map .leaflet-control-attribution *{font-size:10px!important;line-height:1.5!important}
+html body.bu-demo #v-est .bu-map .leaflet-control-attribution{white-space:nowrap;max-width:calc(100% - 8px);padding:0 5px!important;box-sizing:border-box}
+html body.bu-demo #v-est .bu-map .leaflet-control-zoom a{font-size:16px!important;width:26px!important;height:26px!important;line-height:26px!important}
+@media(max-width:600px){.bu-map{height:260px!important}}
+html body.bu-demo #v-est .bu-map .leaflet-control-attribution{width:max-content!important;max-width:none!important;padding:1px 6px!important;margin:0 6px 6px 0!important;border-radius:6px;overflow:visible!important}
+/* ==== 10:13–10:19 pass: hero side column, project card, dark map, site donut, step changes ==== */
+.bu-hide-rev,.bu-src-hold,#buHold[hidden],#buSrcHold[hidden]{display:none!important}
+/* hero: address+map | (two compact levers + live project card) */
+.bu-hero-grid{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)!important}
+.bu-hero-side{display:flex;flex-direction:column;gap:20px;min-width:0}
+.bu-hero-side .bu-lever{gap:10px;padding:16px 18px;flex:0 0 auto}
+.bu-lever-head{display:flex;align-items:center;gap:10px}
+.bu-lever-head label{margin:0!important}
+html body.bu-demo #v-est .bu-lever-head .bu-ico{width:32px!important;height:32px!important;border-radius:8px}
+html body.bu-demo #v-est .bu-lever-head .bu-ico svg{width:18px!important;height:18px!important}
+.bu-lever-row{display:flex;align-items:center;gap:14px}
+html body.bu-demo #v-est .bu-lever-row input[type=number]{flex:0 0 120px;width:120px;font-size:26px!important;padding:8px 12px}
+.bu-lever-row input[type=range]{flex:1 1 auto;margin:0!important}
+.bu-hero-side .bu-lever-foot:empty{display:none}
+.bu-proj{flex:1 1 auto;display:flex;flex-direction:column;gap:12px;padding:18px}
+.bu-proj-grid{flex:1 1 auto;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bu-ctr{background:#131514;border:1px solid var(--bu-line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:3px;min-width:0;justify-content:center}
+.bu-ctr-v{font:500 26px/1.1 "Switzer",sans-serif!important;letter-spacing:-.02em;color:#fff;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bu-ctr-v.accent-t{color:var(--bu-blue3)}
+.bu-ctr-l{font:500 13px/1.3 "Switzer",sans-serif!important;color:#dbdbdb}
+.bu-ctr-s{font:400 12px/1.35 "Switzer",sans-serif!important;color:#8d9393}
+.bu-pj-rate{display:flex;align-items:center;gap:6px;font:400 12px/1.3 "Switzer",sans-serif!important;color:#8d9393;margin-top:2px}
+html body.bu-demo #v-est .bu-pj-rate input{width:64px;box-sizing:border-box;background:#101211;border:1px solid rgba(53,155,197,.45);border-radius:6px;color:#fff;font:500 13px/1.2 "Switzer",sans-serif!important;padding:4px 6px;text-align:right}
+html body.bu-demo #v-est .bu-pj-rate input:focus{outline:none;border-color:var(--bu-blue);box-shadow:0 0 0 2px rgba(53,155,197,.25)}
+.bu-pj-reset{font-size:12px!important;align-self:flex-start}
+@media(max-width:900px){.bu-hero-grid{grid-template-columns:1fr!important}.bu-addr-card{grid-column:auto!important}.bu-hero-side{display:grid;grid-template-columns:1fr 1fr}.bu-proj{grid-column:1 / -1}}
+@media(max-width:600px){.bu-hero-side{grid-template-columns:1fr}.bu-proj-grid{grid-template-columns:1fr 1fr}.bu-ctr-v{font-size:22px!important}}
+@media(max-width:380px){.bu-proj-grid{grid-template-columns:1fr}}
+/* verdict land input */
+.bu-land-in{margin-top:auto}
+html body.bu-demo #v-est .bu-land-in input{width:140px}
+/* dark map */
+.bu-map{background:#101211!important;border:1px solid var(--bu-line)!important;border-radius:12px!important;box-shadow:0 12px 32px rgba(0,0,0,.30)}
+html body.bu-demo #v-est .bu-map .leaflet-tile-pane{filter:none!important}
+html body.bu-demo #v-est .bu-map .bu-tiles{filter:invert(1) hue-rotate(185deg) brightness(.82) contrast(1.12) saturate(.32)}
+html body.bu-demo #v-est .bu-map.leaflet-container,.bu-map .leaflet-container{background:#101211!important}
+.bu-map .bu-map-ph{background:radial-gradient(circle at 50% 42%,rgba(53,155,197,.12),transparent 62%),repeating-linear-gradient(0deg,transparent 0 31px,rgba(255,255,255,.035) 31px 32px),repeating-linear-gradient(90deg,transparent 0 31px,rgba(255,255,255,.035) 31px 32px),#101211!important;color:#9aa0a0}
+html body.bu-demo #v-est .bu-map .leaflet-bar{border:1px solid var(--bu-line)!important;border-radius:10px!important;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.4)!important}
+html body.bu-demo #v-est .bu-map .leaflet-bar a{background:#171918!important;color:#fff!important;border-bottom:1px solid var(--bu-line)!important}
+html body.bu-demo #v-est .bu-map .leaflet-bar a:last-child{border-bottom:0!important}
+html body.bu-demo #v-est .bu-map .leaflet-bar a:hover{background:#202423!important;color:#6CC0E0!important}
+html body.bu-demo #v-est .bu-map .leaflet-control-attribution{background:rgba(23,25,24,.92)!important;color:#aab0b0!important;border:1px solid var(--bu-line)!important;border-radius:8px!important}
+html body.bu-demo #v-est .bu-map .leaflet-control-attribution a{color:#6CC0E0!important}
+.bu-map-pill-wrap{background:none!important;border:0!important}
+html body.bu-demo #v-est .bu-map-pill{display:inline-flex;align-items:center;gap:6px;transform:translate(-50%,-50%);background:#171918;color:#fff;border:1px solid rgba(53,155,197,.55);border-radius:999px;padding:4px 10px;font:600 12px/1.2 "Switzer",sans-serif!important;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.5),0 0 0 3px rgba(53,155,197,.12)}
+.bu-map-pill i{width:7px;height:7px;border-radius:50%;background:#359BC5;box-shadow:0 0 6px #359BC5}
+html body.bu-demo .leaflet-tooltip.bu-tip{background:#171918;color:#fff;border:1px solid rgba(53,155,197,.45);border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.45);font:500 12px/1.3 "Switzer",sans-serif!important;padding:5px 9px}
+html body.bu-demo .leaflet-tooltip.bu-tip::before{border-top-color:rgba(53,155,197,.45)!important}
+/* route label under the map: dark pill */
+.bu-route:not(:empty){align-self:flex-start;background:#101211;border:1px solid var(--bu-line);border-radius:999px;padding:7px 14px!important;font-size:14px!important}
+.bu-route:not(:empty) b:last-of-type{color:#6CC0E0}
+/* step 1 outputs only: two outputs side by side */
+.bu-step-outonly .bu-pair{grid-template-columns:1fr!important}
+.bu-step-outonly .bu-pair-in{display:none!important}
+.bu-step-outonly .bu-pair-out{display:grid!important;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
+.bu-step-outonly .bu-pair-out .bu-slot{display:flex;flex-direction:column}
+.bu-step-outonly .bu-pair-out .bu-slot>*{flex:1 1 auto}
+@media(max-width:900px){.bu-step-outonly .bu-pair-out{grid-template-columns:1fr}}
+/* site costs donut: output table hidden (kept for source/export) */
+.bu-slot[data-key=siteTable]{display:none!important}
+.bu-sd.chart-card{background:var(--bu-card)!important;border-radius:16px!important;box-shadow:0 12px 32px rgba(0,0,0,.30)!important;padding:18px 20px!important;display:flex;flex-direction:column;gap:14px;height:100%;box-sizing:border-box}
+.bu-sd-title{font:600 15px/1.3 "Switzer",sans-serif!important;color:#fff}
+.bu-sd-body{display:grid;grid-template-columns:minmax(170px,220px) minmax(0,1fr);gap:22px;align-items:center;flex:1 1 auto}
+html body.bu-demo #v-est .bu-sd svg[viewBox]{width:100%!important;max-width:220px!important;height:auto!important;display:block!important;margin:0 auto}
+.bu-sd-arc{animation:buSd .55s cubic-bezier(.2,.8,.2,1) both;transform-origin:110px 110px}
+@keyframes buSd{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+.bu-sd-c{fill:#fff;font:600 24px "Switzer",sans-serif!important}
+.bu-sd-s{fill:#8d9393;font:500 10px "Switzer",sans-serif!important;letter-spacing:.08em}
+.bu-sd-leg{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.bu-sd-leg li{display:grid;grid-template-columns:12px minmax(0,1fr) auto 52px;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--bu-line);font:400 14px/1.3 "Switzer",sans-serif!important;color:#e8ecec}
+.bu-sd-leg li:last-child{border-bottom:0}
+.bu-sd-leg i{width:12px;height:12px;border-radius:3px}
+.bu-sd-leg b{font-weight:600;color:#fff;font-variant-numeric:tabular-nums;text-align:right}
+.bu-sd-leg em{font-style:normal;color:#A9DCEF;text-align:right;font-variant-numeric:tabular-nums;font-size:13px!important}
+.bu-sd-tot{display:flex;justify-content:space-between;gap:12px;border-top:1px solid rgba(53,155,197,.35);padding-top:12px;font:500 14px/1.3 "Switzer",sans-serif!important;color:#dbdbdb}
+.bu-sd-tot b{color:#fff;font-weight:600}
+@media(max-width:1100px) and (min-width:901px){.bu-sd-body{grid-template-columns:1fr}}
+@media(max-width:520px){.bu-sd-body{grid-template-columns:1fr}.bu-sd-leg li{font-size:13px!important;grid-template-columns:12px minmax(0,1fr) auto 46px}}
+html body.bu-demo #v-est .bu-map .bu-tiles{filter:grayscale(1) invert(1) brightness(.74) contrast(1.18) sepia(.35) hue-rotate(165deg) saturate(1.35)!important}
+.bu-route:not(:empty){border-radius:14px!important}
+/* ==== 10:26 pass ==== */
+/* Rent and value: compact control strip on top, the two charts 2-up below (stacked on phones), equal heights */
+.bu-step-stack .bu-pair{grid-template-columns:1fr!important}
+.bu-step-stack .bu-pair-out{display:grid!important;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
+.bu-step-stack .bu-pair-out .bu-slot{display:flex;flex-direction:column;min-width:0}
+.bu-step-stack .bu-pair-out .bu-slot>*{flex:1 1 auto;height:auto!important;margin:0!important;box-sizing:border-box}
+.bu-step-stack .bu-wf.chart-card{display:flex;flex-direction:column;justify-content:center}
+@media(max-width:600px){.bu-step-stack .bu-pair-out{grid-template-columns:1fr}}
+/* compact slider cards for the rent step's controls (same rows, labels, values) */
+html body.bu-demo #v-est .bu-step-stack .bu-pair-in section.sec-cat{padding:6px 18px 18px!important}
+html body.bu-demo #v-est .bu-step-stack .bu-pair-in table.out-table tbody{gap:14px!important;padding-top:14px}
+html body.bu-demo #v-est .bu-step-stack .bu-pair-in table.out-table tbody tr:not([hidden]):not([style*="none"]){background:#131514;border:1px solid var(--bu-line)!important;border-radius:12px;padding:14px 16px!important;gap:10px}
+html body.bu-demo #v-est .bu-step-stack .bu-pair-in td.num input:not([type=range]){height:auto;font-size:26px!important;padding:6px 12px!important}
+html body.bu-demo #v-est .bu-step-stack .bu-pair-in .pct-wrap{height:auto!important;padding:6px 12px!important}
+html body.bu-demo #v-est .bu-step-stack .bu-pair-in .pct-wrap input,html body.bu-demo #v-est .bu-step-stack .bu-pair-in .pct-wrap .pct-suffix{font-size:26px!important}
+@media(max-width:600px){html body.bu-demo #v-est .bu-step-stack .bu-pair-in table.out-table tbody{grid-template-columns:1fr 1fr}html body.bu-demo #v-est .bu-step-stack .bu-pair-in td.num input:not([type=range]),html body.bu-demo #v-est .bu-step-stack .bu-pair-in .pct-wrap input,html body.bu-demo #v-est .bu-step-stack .bu-pair-in .pct-wrap .pct-suffix{font-size:20px!important}}
+@media(max-width:380px){html body.bu-demo #v-est .bu-step-stack .bu-pair-in table.out-table tbody{grid-template-columns:1fr}}
+/* % right after the number: the wrapper is the field box, the input sizes to its value */
+html body.bu-demo .pct-wrap{display:flex!important;align-items:center;justify-content:flex-start;gap:1px;box-sizing:border-box;width:100%!important;max-width:none!important;cursor:text;background:#101211;border:1px solid var(--bu-line);border-radius:10px;padding:0 14px;height:46px}
+html body.bu-demo .pct-wrap:focus-within{border-color:var(--bu-blue);box-shadow:0 0 0 3px rgba(53,155,197,.22)}
+html body.bu-demo #v-est .bu-pair-in td.num .pct-wrap input:not([type=range]),html body.bu-demo .pct-wrap input{flex:0 0 auto!important;width:3ch;min-width:1.6ch;max-width:calc(100% - 1.2em)!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;height:auto!important;margin:0!important;text-align:left!important;outline:none}
+html body.bu-demo .pct-wrap .pct-suffix{position:static!important;transform:none!important;right:auto!important;top:auto!important;color:#cfd4d4!important;font:500 18px/1.2 "Switzer",sans-serif!important;pointer-events:none}
+/* Step 2: when collapsed, the accordion bar spans the row and the donut sits full width below it (no height mismatch) */
+html body.bu-demo #v-est .bu-pair.bu-pair-collapsed{grid-template-columns:1fr!important}
+.bu-pair.bu-pair-collapsed .bu-sd-body{grid-template-columns:minmax(170px,240px) minmax(0,520px);justify-content:center}
+@media(max-width:520px){.bu-pair.bu-pair-collapsed .bu-sd-body{grid-template-columns:1fr}}
+html body.bu-demo .pct-wrap input[type=number]{-moz-appearance:textfield;appearance:textfield}
+html body.bu-demo .pct-wrap input[type=number]::-webkit-inner-spin-button,html body.bu-demo .pct-wrap input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+html body.bu-demo #v-est .bu-pair-in td.num input.bu-range{display:block;width:100%!important;max-width:none!important;margin:4px 0 0!important;background:transparent!important;border:0!important;box-shadow:none!important;height:22px!important;padding:0!important}
+html body.bu-demo #v-est .bu-step-stack .bu-pair-in table.out-table td{background:transparent!important}
+html body.bu-demo .pct-wrap .pct-suffix{margin-left:1px}
+html body.bu-demo #v-est .pct-wrap input,html body.bu-demo .pct-wrap input{min-width:0!important}
+/* 10:35 rent charts: identical titles + page-font axes on both charts */
+html body.bu-demo #v-est .bu-wf .bu-wf-title,html body.bu-demo #v-est [data-key=rentProj] .chart-title{fill:#fff!important;font:600 14px "Switzer",sans-serif!important;letter-spacing:0!important}
+html body.bu-demo #v-est [data-key=rentProj] text.tick{fill:#8d9393!important;font:400 11px "Switzer",sans-serif!important;letter-spacing:0!important}
+html body.bu-demo #v-est [data-key=rentProj] text.tick.xlab{fill:#aab0b0!important}
+html body.bu-demo #v-est .bu-step-stack .bu-wf.chart-card{justify-content:flex-start!important}
+/* ===== owner Nov 11 12:39 batch ===== */
+/* hero: levers + Your project LEFT, map + address RIGHT (≥901px); stacked keeps map/address first */
+@media(min-width:901px){
+  .bu-hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr)!important}
+  .bu-hero-side{order:0}
+  .bu-addr-card{order:1}
+  .bu-addr-card .bu-map{flex:1 1 auto;height:auto!important;min-height:320px}
+}
+/* single-line address row */
+html body.bu-demo #v-est .bu-addr-card textarea#inpAddr{min-height:0!important;height:50px!important;max-height:50px!important;resize:none!important;white-space:nowrap!important;overflow:hidden!important;overflow-wrap:normal!important;padding:12px 16px!important;line-height:1.4!important;box-sizing:border-box!important}
+html body.bu-demo #v-est .bu-addr-card .addr-step{padding:0!important;border:0!important}
+html body.bu-demo #v-est .bu-addr-card .addr-step-title{margin:0 0 6px!important}
+.bu-addr-card{gap:12px!important}
+/* local build cost box: compact, no override row */
+.bu-vlocal{align-self:stretch!important;display:flex!important;flex-direction:column}
+.bu-vlocal .bu-cmp{flex:1 1 auto}
+.bu-vlocal .bu-cmp>div{display:flex;flex-direction:column;justify-content:center}
+.bu-vlocal .bu-vkv:last-child{border-bottom:0}
+/* Step 2: always open, two columns ≥601px, charts stacked in the right column */
+html body.bu-demo #v-est #buStep-site .bu-pair{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;align-items:start!important}
+@media(max-width:600px){html body.bu-demo #v-est #buStep-site .bu-pair{grid-template-columns:1fr!important}}
+html body.bu-demo #v-est #buStep-site .bu-pair-in>section{height:100%;box-sizing:border-box}
+html body.bu-demo #v-est #buStep-site .bu-pair-in{display:flex;flex-direction:column}
+html body.bu-demo #v-est #buStep-site .bu-pair-in>section{flex:1 1 auto}
+.bu-slot[data-key=siteDonut]{display:flex;flex-direction:column;gap:20px}
+html body.bu-demo #v-est #buStep-site .bu-sd-body{grid-template-columns:minmax(150px,200px) minmax(0,1fr)}
+@media(max-width:1100px){html body.bu-demo #v-est #buStep-site .bu-sd-body{grid-template-columns:1fr}}
+.bu-ss.chart-card{background:var(--bu-card)!important;border-radius:16px!important;box-shadow:0 12px 32px rgba(0,0,0,.30)!important;padding:18px 20px!important;display:flex;flex-direction:column;gap:14px;box-sizing:border-box}
+.bu-ss-bar{display:flex;height:18px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,.06)}
+.bu-ss-seg{display:block;height:100%;transition:width .35s ease}
+.bu-ss-seg+.bu-ss-seg{box-shadow:inset 2px 0 0 #171918}
+.bu-ss-leg{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.bu-ss-leg li{display:grid;grid-template-columns:12px minmax(0,1fr) auto 52px;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--bu-line);font:400 14px/1.3 "Switzer",sans-serif!important;color:#dbdbdb}
+.bu-ss-leg li:last-child{border-bottom:0}
+.bu-ss-leg i{width:12px;height:12px;border-radius:3px}
+.bu-ss-leg b{font-weight:600;color:#fff;text-align:right;font-variant-numeric:tabular-nums}
+.bu-ss-leg em{font-style:normal;color:#A9DCEF;text-align:right;font-size:13px!important;font-variant-numeric:tabular-nums}
+.bu-ss .bu-sd-tot{margin-top:auto}
+/* demo-owned charts: no grow replay after the first paint; the off-page rentProj render stays hidden */
+.bu-nogrow .bu-wf-bar{animation:none!important}
+body.bu-demo #outRoot>#rentProj{display:none!important}
+.bu-rs.chart-card{background:var(--bu-card)!important;border-radius:16px!important;box-shadow:0 12px 32px rgba(0,0,0,.30)!important;padding:18px!important;box-sizing:border-box}
+html body.bu-demo #v-est .bu-rs svg[viewBox]{width:100%!important;height:auto!important;display:block}
+/* ===== owner Nov 11 12:51 batch ===== */
+/* Step 4: Operating Expenses chart replaces the three tables (hidden reversibly) */
+.bu-slot.bu-hide-rev{display:none!important}
+.bu-ox.chart-card{background:var(--bu-card)!important;border-radius:16px!important;box-shadow:0 12px 32px rgba(0,0,0,.30)!important;padding:18px 20px!important;display:flex;flex-direction:column;gap:12px;box-sizing:border-box;height:100%}
+.bu-ox-plot{flex:1 1 auto;min-height:220px;position:relative}
+html body.bu-demo #v-est .bu-ox-plot svg[viewBox]{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
+.bu-ox-note{font:400 12px/1.4 "Switzer",sans-serif!important;color:#8d9393}
+.bu-slot[data-key=opexChart]{display:flex;flex-direction:column}
+.bu-slot[data-key=opexChart]>.bu-ox{flex:1 1 auto}
+html body.bu-demo #v-est #buStep-opex .bu-pair{align-items:start!important}
+html body.bu-demo #v-est #buStep-opex .bu-pair-in,html body.bu-demo #v-est #buStep-fin .bu-pair-in{display:flex;flex-direction:column}
+html body.bu-demo #v-est #buStep-opex .bu-pair-in>section,html body.bu-demo #v-est #buStep-fin .bu-pair-in>section{flex:1 1 auto;box-sizing:border-box}
+html body.bu-demo #v-est #buStep-opex .bu-pair-out{display:flex;flex-direction:column}
+/* Step 5: charts fill the Underwriting Assumptions height; loan schedules full width directly below */
+html body.bu-demo #v-est #buStep-fin .bu-pair{align-items:start!important}
+html body.bu-demo #v-est #buStep-fin .bu-pair-out{display:flex;flex-direction:column}
+/* owner 12:55: Cash Flow by Year + Cash on Cash live in the Rent step, same card size/style as NOI Build-Up and Five-Year (336px cards) */
+html body.bu-demo #v-est [data-core-chart=cashflow-year],html body.bu-demo #v-est [data-core-chart=coc-line]{height:300px!important;min-height:0!important}
+html body.bu-demo #v-est #buStep-rent .bu-slot[data-key=cfYear]>.chart-card,html body.bu-demo #v-est #buStep-rent .bu-slot[data-key=coc]>.chart-card{background:var(--bu-card)!important;border-radius:16px!important;box-shadow:0 12px 32px rgba(0,0,0,.30)!important;padding:18px!important;height:336px!important;box-sizing:border-box!important;margin:0!important;border:0!important}
+html body.bu-demo #v-est #buStep-rent [data-key=cfYear] .chart-title,html body.bu-demo #v-est #buStep-rent [data-key=coc] .chart-title{fill:#fff!important;font:600 14px "Switzer",sans-serif!important;letter-spacing:0!important}
+html body.bu-demo #v-est #buStep-rent [data-key=cfYear] text.tick,html body.bu-demo #v-est #buStep-rent [data-key=coc] text.tick{fill:#8d9393!important;font:400 11px "Switzer",sans-serif!important;letter-spacing:0!important}
+#buStep-fin .bu-pair-out>.bu-slot>#loanLifecycleBottom{box-sizing:border-box}
+.bu-step-below{margin-top:20px}
+/* final section is the last thing on the page */
+body.bu-demo #outExport{display:none!important}
+body.bu-demo #buOutStage{height:0!important;overflow:hidden!important;margin:0!important;padding:0!important}
+.bu-ready-sub{margin:4px auto 18px;max-width:560px;font:400 16px/1.5 "Switzer",sans-serif!important;color:#c9cfcf;text-align:center}
+/* Step 5 (owner 12:55): Underwriting Assumptions full width, loan schedules full width directly below; no side gap */
+html body.bu-demo #v-est .bu-step-wide .bu-pair{grid-template-columns:1fr!important;gap:20px!important}
+@media(min-width:901px){html body.bu-demo #v-est .bu-step-wide .bu-pair-in table.out-table tbody{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+html body.bu-demo #v-est .bu-step-wide #loanLifecycleBottom{margin:0!important}
+@media(max-width:600px){html body.bu-demo #v-est .bu-step-wide #loanLifecycleBottom .loan-pair{grid-template-columns:1fr!important}}
+/* owner 12:58: identical bottom spacing on all four Rent-step chart cards (axis baseline H-32, labels H-14, 14px card padding below) */
+html body.bu-demo #v-est #buStep-rent .bu-wf.chart-card,html body.bu-demo #v-est #buStep-rent .bu-rs.chart-card,html body.bu-demo #v-est #buStep-rent .bu-slot[data-key=cfYear]>.chart-card,html body.bu-demo #v-est #buStep-rent .bu-slot[data-key=coc]>.chart-card{padding:18px 18px 14px!important;height:auto!important;justify-content:flex-start!important}
+html body.bu-demo #v-est .bu-wf-lab.xs{font-size:10px!important}
+/* owner 13:04: Step 1 Land and sources — cards sized to content, equal heights, donut centred with even padding */
+@media(min-width:601px){html body.bu-demo #v-est #buStep-size .bu-pair-out{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:24px!important;align-items:stretch!important}}
+html body.bu-demo #v-est #buStep-size .bu-pair-out>.bu-slot{display:flex;flex-direction:column;min-width:0;margin:0!important}
+html body.bu-demo #v-est #buStep-size .bu-slot[data-key=land]>section{flex:1 1 auto;display:flex!important;flex-direction:column;justify-content:center;margin:0!important;box-sizing:border-box;padding:24px!important}
+html body.bu-demo #v-est #buStep-size .bu-slot[data-key=sources]>.chart-card{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;padding:24px!important;margin:0!important;box-sizing:border-box;height:auto!important}
+html body.bu-demo #v-est #buStep-size [data-core-chart=sources]{height:220px!important;min-height:0!important}
+@media(max-width:600px){html body.bu-demo #v-est #buStep-size [data-core-chart=sources]{height:270px!important}html body.bu-demo #v-est #buStep-size .bu-pair-out{gap:20px!important}}
+/* owner 13:10: loan schedule charts — SVG fills its slot exactly (was forced to 310px inside a ~240px clipped slot, cutting the month labels) */
+html body.bu-demo #v-est #loanLifecycleBottom .loan-chart [data-core-chart]{height:280px!important;min-height:0!important;max-height:none!important;overflow:hidden!important;padding:0!important;box-sizing:border-box!important}
+html body.bu-demo #v-est #loanLifecycleBottom .loan-chart svg,html body.bu-demo #v-est #loanLifecycleBottom .monthly .loan-chart svg{height:100%!important;max-height:none!important;width:100%!important;display:block!important}
+html body.bu-demo #v-est #loanLifecycleBottom .loan-charts-stack{gap:24px!important}
+html body.bu-demo #v-est #loanLifecycleBottom .loan-pair{gap:24px!important}
+html body.bu-demo #v-est #loanLifecycleBottom text.tick{fill:#8d9393!important;font:400 11px "Switzer",sans-serif!important;letter-spacing:0!important}
+html body.bu-demo #v-est #loanLifecycleBottom .chart-title{fill:#fff!important;font:600 14px "Switzer",sans-serif!important;letter-spacing:0!important}
+/* owner Nov 11 13:14: one card pattern for every paired card on the page — same padding, header row (title left, total right), same title size and spacing above content */
+html body.bu-demo #v-est .bu-pair .bu-slot>.chart-card,html body.bu-demo #v-est .bu-pair .bu-slot>.sec,html body.bu-demo #v-est .bu-pair-in>.sec,html body.bu-demo #v-est .bu-pair .bu-slot .chart-card.bu-ss{padding:22px!important;box-sizing:border-box!important}
+html body.bu-demo #v-est .bu-ch{display:flex!important;justify-content:space-between;align-items:baseline;gap:12px;margin:0 0 16px!important;padding:0 0 14px!important;border-bottom:1px solid rgba(255,255,255,.08);font:500 18px/23.4px "Switzer",sans-serif!important;color:#fff!important;letter-spacing:0!important}
+html body.bu-demo #v-est .bu-ch .bu-ch-t{font:inherit!important;color:inherit!important;min-width:0}
+html body.bu-demo #v-est .bu-ch .bu-ch-v{font:600 18px/23.4px "Switzer",sans-serif!important;color:#fff!important;white-space:nowrap;font-variant-numeric:tabular-nums}
+/* left input/table cards: the table head row is the header row, styled identically */
+html body.bu-demo #v-est .bu-pair-in>.sec>table>thead th{font:500 18px/23.4px "Switzer",sans-serif!important;color:#fff!important;padding:0 0 14px!important;border:0!important;background:none!important;text-transform:none!important;letter-spacing:0!important;height:auto!important}
+html body.bu-demo #v-est .bu-pair-in>.sec>table>thead th.num,html body.bu-demo #v-est .bu-pair-in>.sec>table>thead th.num *{font-weight:600!important}
+/* Step 1 Land and Closing: header row carries the title and total; table head/foot folded in; rows fill the card evenly */
+html body.bu-demo #v-est [data-key=land]>.sec{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:stretch!important}
+html body.bu-demo #v-est [data-key=land]>.sec>table{flex:0 0 auto;width:100%!important;border:0!important;border-radius:0!important;background:none!important;margin:0!important}
+html body.bu-demo #v-est [data-key=land]>.sec>table>thead,html body.bu-demo #v-est [data-key=land]>.sec>table>tfoot{display:none!important}
+html body.bu-demo #v-est [data-key=land]>.sec>table td{border:0!important;border-bottom:1px solid rgba(255,255,255,.06)!important;padding:12px 0!important;background:none!important;font:400 15px/1.4 "Switzer",sans-serif!important;color:#e6eaea!important}
+html body.bu-demo #v-est [data-key=land]>.sec>table tr:last-child td{border-bottom:0!important}
+html body.bu-demo #v-est [data-key=land]>.sec>table td.num{text-align:right!important;font-weight:500!important;color:#fff!important}
+/* Step 1 Sources: donut below the header row, centered */
+html body.bu-demo #v-est [data-key=sources] .chart-card{display:flex!important;flex-direction:column!important}
+html body.bu-demo #v-est #buStep-size .bu-slot[data-key=sources]>.chart-card{padding:22px!important;justify-content:flex-start!important}
+html body.bu-demo #v-est #buStep-size .bu-slot[data-key=sources] [data-core-chart=sources]{height:150px!important;min-height:0!important;flex:0 0 auto}
+@media(max-width:600px){html body.bu-demo #v-est #buStep-size .bu-slot[data-key=sources] [data-core-chart=sources]{height:200px!important}}
+/* Rent and value: four charts share one plot height under the header row */
+html body.bu-demo #v-est #buStep-rent [data-key=cfYear] .chart-slot,html body.bu-demo #v-est #buStep-rent [data-key=coc] .chart-slot{height:250px!important;min-height:0!important}
+html body.bu-demo #v-est .bu-wf svg,html body.bu-demo #v-est .bu-rs svg{display:block}
+/* folded footers no longer used in Step 2/4 cards */
+html body.bu-demo #v-est .bu-sd .bu-sd-tot,html body.bu-demo #v-est .bu-ss .bu-sd-tot,html body.bu-demo #v-est .bu-ox .bu-sd-tot{display:none!important}
+.bu-matched{font:400 13px/1.4 "Switzer",sans-serif;color:#d6eef7;margin:0 0 6px}
+.bu-matched .bu-muted{color:#8d9393}
+/* sticky step bar must not cover section headings when jumping or scrolling to a step */
+html body.bu-demo #v-est .bu-step,html body.bu-demo #v-est [id^=buStep-],html body.bu-demo #v-est #buReady,html body.bu-demo #v-est #buVerdict{scroll-margin-top:var(--bu-bar-h,140px)}
+/* owner Nov 11 13:23: Step 2 breakdown as horizontal bars */
+html body.bu-demo #v-est .bu-sb{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+html body.bu-demo #v-est .bu-sb li{display:grid;grid-template-columns:minmax(96px,150px) minmax(40px,1fr) auto 52px;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font:400 14px/1.3 "Switzer",sans-serif;color:#e6eaea}
+html body.bu-demo #v-est .bu-sb li:last-child{border-bottom:0}
+html body.bu-demo #v-est .bu-sb .bu-sb-t{height:12px;border-radius:6px;background:rgba(255,255,255,.06);overflow:hidden;display:block}
+html body.bu-demo #v-est .bu-sb .bu-sb-t i{display:block;height:100%;border-radius:6px;transform-origin:left center;animation:buSbGrow .5s ease-out both}
+@keyframes buSbGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+html body.bu-demo #v-est .bu-sb b{font-weight:600;color:#fff;text-align:right;font-variant-numeric:tabular-nums}
+html body.bu-demo #v-est .bu-sb em{font-style:normal;color:#6CC0E0;text-align:right;font-variant-numeric:tabular-nums}
+@media(max-width:600px){html body.bu-demo #v-est .bu-sb li{grid-template-columns:1fr auto 46px;row-gap:6px}html body.bu-demo #v-est .bu-sb .bu-sb-t{grid-column:1/-1;grid-row:2}}
+/* owner Nov 11 13:23: final section reduced to heading + Download, inside the Financing and hold grid's empty cell */
+html body.bu-demo #v-est #buReady{display:none!important}
+html body.bu-demo #v-est #uwTable tbody tr.bu-ready-cell{display:flex!important;align-items:stretch}
+html body.bu-demo #v-est #uwTable tbody tr.bu-ready-cell>td{display:flex!important;flex:1 1 auto;padding:0!important;border:0!important;width:auto!important}
+html body.bu-demo #v-est .bu-ready-mini{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:14px;padding:18px 20px;border-radius:12px;background:linear-gradient(135deg,rgba(53,155,197,.16),rgba(53,155,197,.04));border:1px solid rgba(108,192,224,.28);box-sizing:border-box;min-height:100%}
+html body.bu-demo #v-est .bu-ready-mini .bu-ready-h{font:500 20px/1.25 "Switzer",sans-serif;color:#fff}
+html body.bu-demo #v-est .bu-ready-mini .bu-ready-h .accent{color:#6CC0E0}
+html body.bu-demo #v-est .bu-ready-mini .bu-btn{margin:0!important;padding:12px 20px!important;font:600 15px/1 "Switzer",sans-serif!important}
+html body.bu-demo #v-est [data-key=land]>.sec>table tr.bu-land-share td{color:#8d9393!important}html body.bu-demo #v-est [data-key=land]>.sec>table tr.bu-land-share td.num{color:#6CC0E0!important}
+html body.bu-demo #v-est #buStep-size .bu-slot[data-key=land]>section{padding:22px!important;justify-content:flex-start!important}
+/* land rows: always a simple label | value row (the responsive-table stacking is for wide tables only) */
+html body.bu-demo #v-est #buStep-size [data-key=land]>.sec>table,html body.bu-demo #v-est #buStep-size [data-key=land]>.sec>table>tbody{display:block!important;width:100%!important}
+html body.bu-demo #v-est #buStep-size [data-key=land]>.sec>table>tbody>tr{display:flex!important;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:1px solid rgba(255,255,255,.06)!important;padding:12px 0!important;margin:0!important;background:none!important;border-top:0!important}
+html body.bu-demo #v-est #buStep-size [data-key=land]>.sec>table>tbody>tr:last-child{border-bottom:0!important}
+html body.bu-demo #v-est #buStep-size [data-key=land]>.sec>table>tbody>tr>td{display:block!important;padding:0!important;border:0!important;width:auto!important;text-align:left}
+html body.bu-demo #v-est #buStep-size [data-key=land]>.sec>table>tbody>tr>td.num{text-align:right!important}
+html body.bu-demo #v-est #buStep-size [data-key=land]>.sec>table>tbody>tr>td::before{content:none!important;display:none!important}
+/* Rent and value chart cards: same 22px card padding as every other paired card */
+html body.bu-demo #v-est #buStep-rent .bu-wf.chart-card,html body.bu-demo #v-est #buStep-rent .bu-rs.chart-card,html body.bu-demo #v-est #buStep-rent .bu-slot[data-key=cfYear]>.chart-card,html body.bu-demo #v-est #buStep-rent .bu-slot[data-key=coc]>.chart-card{padding:22px!important}
+/* left input cards: 22px like the right-hand cards */
+html body.bu-demo #v-est #buStep-site .bu-pair-in>.sec,html body.bu-demo #v-est #buStep-rent .bu-pair-in>.sec,html body.bu-demo #v-est #buStep-opex .bu-pair-in>.sec,html body.bu-demo #v-est #buStep-fin .bu-pair-in>.sec{padding:22px!important}
+html body.bu-demo #v-est .bu-pair-in>.sec>table>thead>tr{padding:0!important}
+html body.bu-demo #v-est .bu-pair-in>.sec>table{border-top:0!important;margin-top:0!important}
+html body.bu-demo #v-est .bu-pair-in>.sec>table>thead th.num{white-space:nowrap!important}
+/* review 13:37 — Step 2 right column fits the inputs card: compact bar rows, donut beside its legend; the bar card stretches its rows to absorb any remainder */
+html body.bu-demo #v-est #buStep-site .bu-slot[data-key=siteDonut]{gap:16px!important}
+html body.bu-demo #v-est .bu-sd{display:flex!important;flex-direction:column!important}
+html body.bu-demo #v-est .bu-sd .bu-sb{flex:1 1 auto;display:flex;flex-direction:column}
+html body.bu-demo #v-est .bu-sb li{flex:1 1 auto;padding:5px 0!important}
+@media(min-width:601px){
+html body.bu-demo #v-est .bu-ss .bu-sd-body{display:grid!important;grid-template-columns:132px minmax(0,1fr)!important;align-items:center!important;gap:20px!important;flex-direction:row!important}
+html body.bu-demo #v-est .bu-ss .bu-sd-body svg{width:132px!important;height:132px!important;max-width:132px!important;flex:0 0 auto}
+html body.bu-demo #v-est .bu-ss .bu-sd-leg li{padding:7px 0!important}
+}
+/* percent figures: the decimal point must read clearly (5.3%, not 53%) */
+html body.bu-demo #v-est .bu-sb em,html body.bu-demo #v-est .bu-sd-leg em{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;letter-spacing:.01em;font-weight:500}
+/* "Ready to show a lender": real space before the highlight */
+html body.bu-demo #v-est .bu-ready-mini .bu-ready-h .accent{white-space:nowrap}
+/* Underwriting Assumptions: Lender B LTV "Cost basis" sub-label dropped so the tag and input align with the row */
+html body.bu-demo #v-est #uwTable td>.unit{display:none!important}
+/* Rent basis select: left-aligned like the other inputs */
+html body.bu-demo #v-est #uwTable select,html body.bu-demo #v-est .bu-pair-in select{text-align:left!important;text-align-last:left!important;padding:10px 40px 10px 14px!important}
+html body.bu-demo #v-est .bu-ready-mini .bu-ready-h,html body.bu-demo #v-est .bu-ready-mini .bu-ready-h .accent{font:500 20px/1.25 "Switzer",sans-serif!important;letter-spacing:0!important;word-spacing:.14em!important}
+html body.bu-demo #v-est .bu-ready-mini .bu-ready-h .accent{color:#6CC0E0!important}
+
+/* owner Nov 11 14:04: standalone Download section beneath Step 5 (replaces the UW-grid Ready cell) */
+html body.bu-demo #v-est #buReady{display:block!important;padding:0!important;margin:0 auto 72px!important}
+html body.bu-demo #v-est #buReady .bu-dl-card{display:flex;align-items:center;justify-content:space-between;gap:24px;background:#171918;border:1px solid rgba(169,220,239,.10);border-radius:16px;padding:28px 32px;box-sizing:border-box}
+html body.bu-demo #v-est #buReady .bu-dl-h{font:500 28px/1.2 "Switzer",sans-serif!important;letter-spacing:-.01em!important;color:#fff!important;margin:0!important}
+html body.bu-demo #v-est #buReady .bu-dl-sub{font:400 15px/1.45 "Switzer",sans-serif!important;color:#A9DCEF!important;margin:6px 0 0!important}
+html body.bu-demo #v-est #buReady .bu-btn{flex:0 0 auto;margin:0!important;padding:14px 22px!important;font:600 15px/1 "Switzer",sans-serif!important}
+@media(max-width:600px){html body.bu-demo #v-est #buReady .bu-dl-card{flex-direction:column;align-items:flex-start;padding:22px 20px}html body.bu-demo #v-est #buReady .bu-dl-h{font-size:24px!important}html body.bu-demo #v-est #buReady .bu-btn{width:100%}}
+html body.bu-demo #v-est #buSteps #buReady{width:100%!important;max-width:none!important;margin:0 0 72px!important}
+
+/* owner Nov 11 14:10: free-trial gate box */
+.bu-trial{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(16,18,17,.78);backdrop-filter:blur(4px)}
+.bu-trial[hidden]{display:none!important}
+.bu-trial .bu-trial-card{width:min(480px,100%);box-sizing:border-box;background:#171918;border:1px solid rgba(169,220,239,.14);border-radius:16px;padding:32px;box-shadow:0 24px 60px rgba(0,0,0,.5);color:#fff;text-align:left}
+.bu-trial h2{font:500 26px/1.2 "Switzer",sans-serif!important;color:#fff!important;margin:0 0 10px!important;letter-spacing:-.01em}
+.bu-trial .bu-trial-msg{font:400 16px/1.5 "Switzer",sans-serif!important;color:#D6EEF7!important;margin:0 0 24px!important}
+.bu-trial .bu-trial-btns{display:flex;gap:12px;flex-wrap:wrap}
+.bu-trial .bu-trial-go{display:inline-flex;align-items:center;justify-content:center;padding:13px 22px!important;border-radius:10px;background:#359BC5!important;color:#101211!important;font:600 15px/1 "Switzer",sans-serif!important;text-decoration:none!important;margin:0!important}
+.bu-trial .bu-trial-x{padding:13px 22px;border-radius:10px;background:transparent;border:1px solid rgba(169,220,239,.35);color:#D6EEF7;font:600 15px/1 "Switzer",sans-serif;cursor:pointer}
+.bu-trial .bu-trial-x:hover{border-color:#6CC0E0;color:#fff}
+@media(max-width:600px){.bu-trial .bu-trial-card{padding:24px 20px}.bu-trial .bu-trial-btns>*{flex:1 1 100%;text-align:center}}
+html.bu-trial-open{overflow:hidden}
+
+/* owner Nov 11 14:34: Download Your Model = site primary button (same as Get started / Get in touch) */
+html body.bu-demo #v-est #buReady .bu-btn{background:#359BC5!important;color:#101211!important;border:0!important;border-radius:8px!important;box-shadow:none!important;transition:background-color .15s ease}
+html body.bu-demo #v-est #buReady .bu-btn:hover,html body.bu-demo #v-est #buReady .bu-btn:focus-visible{background:#4FB3DC!important;color:#101211!important}
+html body.bu-demo #v-est #buReady .bu-btn:focus-visible{outline:2px solid #D6EEF7!important;outline-offset:2px}
+/* owner Nov 11 15:04 "fix spacing": Local build cost vs modular tiles = content height, top-aligned, numbers on one baseline; extra card height falls below the rows, not inside the tiles */
+html body.bu-demo #v-est #buVerdict .bu-vlocal .bu-cmp{flex:0 0 auto!important;display:grid!important;grid-template-columns:1fr 1fr;align-items:stretch!important;gap:12px;margin:6px 0 4px!important;min-height:0!important;height:auto!important}
+html body.bu-demo #v-est #buVerdict .bu-vlocal .bu-cmp>div{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:flex-start;gap:6px;padding:18px 20px!important;min-height:0!important;height:auto!important;box-sizing:border-box}
+html body.bu-demo #v-est #buVerdict .bu-vlocal .bu-cmp-v{display:block;margin:0!important;line-height:1.1!important}
+html body.bu-demo #v-est #buVerdict .bu-vlocal .bu-cmp-l{display:block;margin:0!important}
+html body.bu-demo #v-est #buVerdict .bu-vlocal .bu-vsub{margin-top:6px}
+@media(max-width:600px){html body.bu-demo #v-est #buVerdict .bu-vlocal .bu-cmp{grid-template-columns:1fr}}
+/* owner Nov 11 15:05 "fix spacing": Download your model = last section; one Torch gutter below it (was 72 margin + 24 steps padding + 120 page padding = 216px void); edges = Step sections */
+html body.bu-demo #v-est #buSteps #buReady{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;box-sizing:border-box}
+html body.bu-demo #v-est #buReady .bu-dl-card{width:100%!important;max-width:none!important;margin:0!important;box-sizing:border-box;padding:28px 32px!important}
+html body.bu-demo #v-est #buSteps{padding-bottom:0!important}
+html body.bu-demo #v-est{padding-bottom:var(--bu-g,80px)!important}
+@media(max-width:600px){html body.bu-demo #v-est #buReady .bu-dl-card{padding:24px 20px!important}}
+
+/* owner Nov 11 15:14: Download section = just the centered blue button (no heading, no gray card/border) */
+html body.bu-demo #v-est #buReady .bu-dl-card{display:flex!important;justify-content:center!important;align-items:center!important;background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important}
+html body.bu-demo #v-est #buReady .bu-btn{width:auto!important;flex:0 0 auto!important}
+
+
+/* stability-overflow Nov 11: extreme values wrap instead of overflowing tiles; normal figures unchanged */
+
+html body.bu-demo #v-est #buVerdict .bu-cmp-v,
+html body.bu-demo #v-est #buVerdict .bu-vbig.sm,
+html body.bu-demo .bu-ctr-v{overflow-wrap:anywhere;max-width:100%;}
+html body.bu-demo .bu-noscript{margin:24px auto;max-width:40rem;padding:16px 20px;background:#171918;color:#fff;border:1px solid #359BC5;border-radius:8px;font:16px/1.5 "Switzer",sans-serif}
+@media(max-width:360px){html body.bu-demo{overflow-x:hidden}}
